@@ -3,7 +3,6 @@
 namespace App\Controllers;
 
 use App\Services\DataBase\Doctrine;
-use App\Services\SessionPHP;
 use Doctrine\ORM\EntityManager;
 use Jenssegers\Blade\Blade;
 
@@ -11,6 +10,7 @@ class BaseController
 {
     private Blade $template;
     protected EntityManager $em;
+    protected array $filePaths;
 
     public function __construct()
     {
@@ -28,7 +28,14 @@ class BaseController
 
     }
 
-    public function getCurl(string $url): string
+    protected function getFileFromCurl(string $url, string $filename): string
+    {
+        $filePath = __DIR__ . '/../Pages/' . $filename . '.html';
+        file_put_contents($filePath, $this->getCurl($url));
+        return $filePath;
+    }
+
+    protected function getCurl(string $url): string
     {
         $curl = curl_init($url);
         curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);

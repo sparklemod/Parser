@@ -9,87 +9,49 @@ class Category extends BaseController
 {
     private \App\Models\Category $model;
 
+
     private const SITE = 'https://expresspanda.ru/';
 
     public function __construct()
     {
         parent::__construct();
-        //$this->model = new \App\Models\Category($this->session);
+        $this->model = new \App\Models\Category();
     }
 
-    public function getCards()
+    public function actions()
     {
+        $this->render('Category/actionsMenu', []);
+    }
 
-        if (!file_get_contents(__DIR__ . '/../Pages/main.html')) {
+    public function getCategories()
+    {
+        if (!file_get_contents(__DIR__ . '/../Pages/sety.html')) {
             $html = $this->getFileFromCurl(self::SITE, 'main');
         }
 
-        //$matches = array('matches', 'links','categories','name');
-        $html = file_get_contents(__DIR__ . '/../Pages/main.html');
-        preg_match_all('/<a href=\"(?<links>.+)\" class=\"header__category-link\s+[^\"]*\"\n?.* data-subcategory-code=\"(?<categories>.+)\">(?<names>.+)<\/a>/iu', $html, $matches);
-        var_dump($matches);
+        $html = new Document(__DIR__ . '/../Pages/sety.html', true);
+        $data['links'] = $html->find('a.header__category-link::attr(href)');
+        $data['categoriesCodes'] = $html->find('a.header__category-link::attr(data-subcategory-code)');
+        $data['names'] = $html->find('a.header__category-link::text');
+        $this->model->add($data);
+        //header("Location: /?c=Category&m=list");
 
-
-
-
-
-
-
-        /*$name =;
-        $cost = ;
-        $description =;
-        $weight=;
-        $proteins =;
-        $fats=;
-        $carbohydrates=;*/
-
-
+        /*echo '<pre>';
+        var_dump($data);
+        echo '</pre>';*/
     }
 
-
-
-
-    /*foreach($links as $link) {
-        var_dump($link);
-    }*/
-
-    //file_put_contents(__DIR__ . '/file.html',$html);
-
-    //preg_match_all('/<a href=\"(.+?)\" class=\"header__category-link\s+[^\"]*\"\n?.* data-subcategory-code=\".+?\">(.+?)<\/a>/iu', $html, $matches);
-    //print_r($matches);
-
-
-    //$this->render('Category/account', $html);
-
-
-    public function getMainHtml()
+    private function getCategoriesHtml(array $data): array
     {
-        $this->getFileFromCurl(self::SITE, 'main');
-    }
-
-    public function getCategoriesHtml(string $mainFilePath): array
-    {
-        $document = new Document($mainFilePath, true);
-        $categories = $document->find('a::attr(data-subcategory-code)');
-        $links = $document->find('a.header__category-link::attr(href)');
-        $filePaths = array();
-        for ($i = 0; $i < count($categories); $i++) {
-
-            if (!file_get_contents(__DIR__ . '/../Pages/' . $categories[$i] . '.html')) {
-                $filePaths[$i] = $this->getFileFromCurl($links[$i], $categories[$i]);
+        for ($i = 0; $i < count($data['categoriesCode']); $i++) {
+            if (!file_get_contents(__DIR__ . '/../Pages/' . $data['categoriesCodes'][$i] . '.html')) {
+                $this->filePaths[$i] = $this->getFileFromCurl($data['links'][$i], $data['categoriesCodes'][$i]);
             } else {
-                $filePaths[$i] = __DIR__ . '/../Pages/' . $categories[$i] . '.html';
+                $this->filePaths[$i] = __DIR__ . '/../Pages/' . $data['categoriesCodes'][$i] . '.html';
             }
         }
 
-        return $filePaths;
-    }
-
-    public function getFileFromCurl(string $url, string $filename): string
-    {
-        $filePath = __DIR__ . '/../Pages/' . $filename . '.html';
-        file_put_contents($filePath, $this->getCurl($url));
-        return $filePath;
+        return $this->filePaths;
     }
 
 

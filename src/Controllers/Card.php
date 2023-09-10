@@ -2,24 +2,32 @@
 
 namespace App\Controllers;
 
-use App\Repository\BookRepository;
-use App\Repository\UserRepository;
+use App\Repository\CardRepository;
+use App\Repository\CategoryRepository;
 
 class Card extends BaseController
 {
-    private \App\Models\Card $book;
+    private \App\Models\Card $card;
+
     public function __construct()
     {
         parent::__construct();
-
-        if (!$this->session->isAuth()) {
-            header("Location: /?c=newUser&m=logIn");
-            exit;
-        }
-        $this->book = new \App\Models\Card();
+        $this->card = new \App\Models\Card();
     }
 
-    public function create()
+    public function getCards()
+    {
+        /*$name =;
+        $cost = ;
+        $description =;
+        $weight=;
+        $proteins =;
+        $fats=;
+        $carbohydrates=;*/
+
+    }
+
+    /*public function create()
     {
         $this->render('Card/create', []);
 
@@ -54,7 +62,7 @@ class Card extends BaseController
         (new \App\Models\Card())->delete($_GET['id']);
 
         header("Location: /?c=book&m=list");
-    }
+    }*/
 
 }
 

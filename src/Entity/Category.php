@@ -32,7 +32,7 @@ class Category
     /**
      * @ORM\Column(type="string")
      */
-    private string $links;
+    private string $link;
 
 
     /**
@@ -89,18 +89,18 @@ class Category
     /**
      * @return string
      */
-    public function getLinks(): string
+    public function getLink(): string
     {
-        return $this->links;
+        return $this->link;
     }
 
     /**
-     * @param string $links
+     * @param string $link
      * @return Category
      */
-    public function setLinks(string $links): Category
+    public function setLink(string $link): Category
     {
-        $this->links = $links;
+        $this->link = $link;
         return $this;
     }
 

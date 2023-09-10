@@ -2,23 +2,35 @@
 
 namespace App\Models;
 
-use App\Entity\Category as UserEntity;
+use App\Entity\Category as CategoryEntity;
 use App\Repository\CategoryRepository;
 use App\Services\DataBase\Doctrine;
-use App\Services\SessionPHP;
+
 
 class Category
 {
     private CategoryRepository $repository;
-    private SessionPHP $session;
 
-    public function __construct(SessionPHP $session)
+    public function __construct()
     {
-        $this->session = $session;
         $this->repository = new CategoryRepository();
     }
 
-    public function registration(array $data): int
+    public function add(array $data): void
+    {
+        for ($i = 0; $i < count($data['names']); $i++) {
+            $category = $this->repository->findOneBy(['name' => $data['names'][$i], 'link' => $data['links'][$i]]);
+
+            if (!$category) {
+                $category = new CategoryEntity();
+                $category->setName($data['names'][$i])->setLink($data['links'][$i]);
+                Doctrine::getEntityManager()->persist($category);
+                Doctrine::getEntityManager()->flush();
+            }
+        }
+    }
+
+    /*public function registration(array $data): int
     {
         if ($this->inputCheck($data) && $this->checkPass($data['pass']) && !$this->isUserExist($data['email'])) {
             $user = new UserEntity();
@@ -88,5 +100,5 @@ class Category
         }
 
         return null;
-    }
+    }*/
 }

@@ -12,7 +12,7 @@ class Card
 {
     public function create(int $userID, array $data)
     {
-        $user = (new UserRepository())->find($userID);
+        $user = (new CategoryRepository())->find($userID);
         $book = new BookEntity();
         $year = new DateTime($data['year']);
         $book->setName($data['name'])
