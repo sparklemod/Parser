@@ -54,4 +54,4 @@
     </div>
 </section>
 
-<?php /**PATH C:\OSPanel\domains\localhost\src\Views/User/account.blade.php ENDPATH**/ ?>
+<?php /**PATH C:\OSPanel\domains\localhost\src\Views/Category/account.blade.php ENDPATH**/ ?>

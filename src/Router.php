@@ -8,7 +8,7 @@ class Router
 {
     public function behave()
     {
-        (new SessionPHP())->start();
+        //(new SessionPHP())->start();
 
         $pathController = "\App\Controllers";
         $controller = $pathController . "\\" . ucfirst($_GET['c']); //преобразует первый символ строки в верхний регистр.

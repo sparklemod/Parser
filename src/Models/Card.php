@@ -2,13 +2,13 @@
 
 namespace App\Models;
 
-use App\Entity\Book as BookEntity;
+use App\Entity\Card as BookEntity;
 use App\Repository\BookRepository;
-use App\Repository\UserRepository;
+use App\Repository\CategoryRepository;
 use App\Services\DataBase\Doctrine;
 use DateTime;
 
-class Book
+class Card
 {
     public function create(int $userID, array $data)
     {
@@ -46,7 +46,7 @@ class Book
 
     public function getByUserId(int $id): array
     {
-        $user = (new UserRepository())->find($id);
+        $user = (new CategoryRepository())->find($id);
 
         if ($user) {
             return $user->getBooks();

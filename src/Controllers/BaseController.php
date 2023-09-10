@@ -10,13 +10,11 @@ use Jenssegers\Blade\Blade;
 class BaseController
 {
     private Blade $template;
-    protected SessionPHP $session;
     protected EntityManager $em;
 
     public function __construct()
     {
         $this->template = new Blade(__DIR__ . '/../Views', __DIR__ . '/../Views/Cache');
-        $this->session = new SessionPHP();
         $this->em = Doctrine::getEntityManager();
     }
 
@@ -28,6 +26,17 @@ class BaseController
     {
         echo $this->template->render($template, $data);
 
+    }
+
+    public function getCurl(string $url): string
+    {
+        $curl = curl_init($url);
+        curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, false);
+        curl_setopt($curl, CURLOPT_HEADER, false);
+        $html = curl_exec($curl);
+        curl_close($curl);
+        return $html;
     }
 
 

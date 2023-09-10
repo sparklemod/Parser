@@ -30,4 +30,4 @@
     </form>
 </div>
 </body>
-</html><?php /**PATH C:\OSPanel\domains\localhost\src\Views/User/edit.blade.php ENDPATH**/ ?>
+</html><?php /**PATH C:\OSPanel\domains\localhost\src\Views/Category/edit.blade.php ENDPATH**/ ?>

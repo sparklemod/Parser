@@ -5,9 +5,9 @@ namespace App\Controllers;
 use App\Repository\BookRepository;
 use App\Repository\UserRepository;
 
-class Book extends BaseController
+class Card extends BaseController
 {
-    private \App\Models\Book $book;
+    private \App\Models\Card $book;
     public function __construct()
     {
         parent::__construct();
@@ -16,42 +16,42 @@ class Book extends BaseController
             header("Location: /?c=newUser&m=logIn");
             exit;
         }
-        $this->book = new \App\Models\Book();
+        $this->book = new \App\Models\Card();
     }
 
     public function create()
     {
-        $this->render('Book/create', []);
+        $this->render('Card/create', []);
 
         if (empty($_POST)) {
             return;
         }
-        (new \App\Models\Book())->create($this->session->getUserID(), $_POST);
+        (new \App\Models\Card())->create($this->session->getUserID(), $_POST);
         header("Location: /?c=book&m=list");
     }
 
     public function list()
     {
-        $this->render('Book/list', ['books' => $this->book->getByUserId($this->session->getUserID())]);
+        $this->render('Card/list', ['books' => $this->book->getByUserId($this->session->getUserID())]);
     }
 
     public function edit()
     {
-        $book = (new BookRepository())->find($_GET['id']);
-        $this->render('Book/edit', ['book' => $book->toArray()]);
+        $book = (new CardRepository())->find($_GET['id']);
+        $this->render('Card/edit', ['book' => $book->toArray()]);
 
         if (empty($_POST)) {
             return;
         }
 
-        (new \App\Models\Book())->edit($_GET['id'], $_POST);
+        (new \App\Models\Card())->edit($_GET['id'], $_POST);
         header("Location: /?c=book&m=list");
 
     }
 
     public function delete()
     {
-        (new \App\Models\Book())->delete($_GET['id']);
+        (new \App\Models\Card())->delete($_GET['id']);
 
         header("Location: /?c=book&m=list");
     }

@@ -33,4 +33,4 @@
 
 </div>
 </body>
-</html><?php /**PATH C:\OSPanel\domains\localhost\src\Views/Category/authorization.blade.php ENDPATH**/ ?>
+</html><?php /**PATH C:\OSPanel\domains\Parser\src\Views/Category/authorization.blade.php ENDPATH**/ ?>

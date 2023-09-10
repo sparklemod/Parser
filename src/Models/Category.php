@@ -2,20 +2,20 @@
 
 namespace App\Models;
 
-use App\Entity\User as UserEntity;
-use App\Repository\UserRepository;
+use App\Entity\Category as UserEntity;
+use App\Repository\CategoryRepository;
 use App\Services\DataBase\Doctrine;
 use App\Services\SessionPHP;
 
-class User
+class Category
 {
-    private UserRepository $repository;
+    private CategoryRepository $repository;
     private SessionPHP $session;
 
     public function __construct(SessionPHP $session)
     {
         $this->session = $session;
-        $this->repository = new UserRepository();
+        $this->repository = new CategoryRepository();
     }
 
     public function registration(array $data): int

@@ -38,7 +38,7 @@ class Doctrine
                 'driver' => 'pdo_mysql',
                 'user' => 'root',
                 'password' => '',
-                'dbname' => 'UsersData',
+                'dbname' => 'CardsData',
                 'host' => 'localhost',
                 'charset' => 'utf8',
                 'driverOptions' => [

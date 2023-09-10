@@ -33,4 +33,4 @@
     </form>
 </div>
 </body>
-</html><?php /**PATH C:\OSPanel\domains\localhost\src\Views/Book/create.blade.php ENDPATH**/ ?>
+</html><?php /**PATH C:\OSPanel\domains\localhost\src\Views/Card/create.blade.php ENDPATH**/ ?>

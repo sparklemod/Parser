@@ -20,7 +20,9 @@
     "ext-mysqli": "*",
     "jenssegers/blade": "^1.4",
     "ext-pdo": "*",
-    "doctrine/migrations": "^3.5"
+    "doctrine/migrations": "^3.5",
+    "ext-curl": "*",
+    "imangazaliev/didom": "^2.0"
   },
   "require-dev": {
     "vimeo/psalm": "^5.14",

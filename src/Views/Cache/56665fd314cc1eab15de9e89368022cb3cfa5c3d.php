@@ -51,4 +51,4 @@
     </table>
 </div>
 </body>
-</html><?php /**PATH C:\OSPanel\domains\localhost\src\Views/Book/list.blade.php ENDPATH**/ ?>
+</html><?php /**PATH C:\OSPanel\domains\localhost\src\Views/Card/list.blade.php ENDPATH**/ ?>
