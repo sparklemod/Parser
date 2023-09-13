@@ -8,16 +8,19 @@ use phpDocumentor\Reflection\Types\Array_;
 
 class Category extends BaseController
 {
-    private \App\Models\Category $category;
+    private \App\Models\Category $modelCategory;
+    private \App\Models\Card $modelCard;
     protected array $filePaths;
-    private \App\Models\Card $card;
+
+
 
     private const SITE = 'https://expresspanda.ru/';
 
     public function __construct()
     {
         parent::__construct();
-        $this->category = new \App\Models\Category();
+        $this->modelCategory = new \App\Models\Category();
+        $this->modelCard = new \App\Models\Card();
     }
 
     public function actions()
@@ -32,32 +35,39 @@ class Category extends BaseController
         }
 
         $html = new Document(__DIR__ . '/../Pages/main.html', true);
-        $categories = $html->find('section.catalog__section');
+        $sections = $html->find('section.catalog__section');
+        //$card = array(['name'], ['cost'], ['description'], ['weight'], ['proteins'], ['fats'], ['carbohydrates'], ['calories']);
 
-        foreach ($categories as $item) {
-            
-            $card['link'] = $item->first('a::attr(href)');
-            $card['name'] = $item->first('a.card__title::text');
-            $card['cost'] = $item->first('div.card-footer__price span::text');
-            $card['description'] = $item->first('p.card__desc::text');
-            $card['weight'] = (
-                preg_replace('/[^0-9]/', '', $item->first('p.card__hint-title::text'))) ?:
-                preg_replace('/[^0-9]/', '', $item->first('p.card__hint-title span::text')
-                );
-            $card['proteins'] = $item->first('table.card__hint-table tr td b::text');
-            $card['fats'] = $item->first('table.card__hint-table tr td:nth-child(2) b::text');
-            $card['carbohydrates'] = $item->first('table.card__hint-table tr:nth-child(2) td b::text');
-            $card['calories'] = $item->first('table.card__hint-table tr:nth-child(2) td:nth-child(2) b::text');
+        foreach ($sections as $section) {
+            $category = $section->first('section.catalog__section::attr(data-id)');
+            $cardSections = $section->find('li.catalog__products-item');
+            $this->modelCategory->addCategory(array($category));
 
-            echo '<pre>';
-            var_dump($card);
-            echo '</pre>';
-
+            foreach ($cardSections as $cardSection) {
+                //$card['link'] = $item->first('a::attr(href)');
+                $card['name'] = $cardSection->first('a.card__title::text');
+                $card['cost'] = $cardSection->first('div.card-footer__price span::text');
+                $card['description'] = $cardSection->first('p.card__desc::text');
+                $card['weight'] = (
+                preg_replace('/[^0-9]/', '', $cardSection->first('p.card__hint-title::text'))) ?:
+                    preg_replace('/[^0-9]/', '', $cardSection->first('p.card__hint-title span::text')
+                    );
+                $card['proteins'] = $cardSection->first('table.card__hint-table tr td b::text');
+                $card['fats'] = $cardSection->first('table.card__hint-table tr td:nth-child(2) b::text');
+                $card['carbohydrates'] = $cardSection->first('table.card__hint-table tr:nth-child(2) td b::text');
+                $card['calories'] = $cardSection->first('table.card__hint-table tr:nth-child(2) td:nth-child(2) b::text');
+                /*echo '<pre>';
+                var_dump($card);
+                echo '</pre>';*/
+                $this->modelCard($card, $category);
+            }
 
         }
-        echo '<pre>';
-        var_dump($card);
-        echo '</pre>';
+
+
+
+
+
         /* $data['links'] = $html->find('a.header__category-link::attr(href)');
          $data['categoriesCodes'] = $html->find('a.header__category-link::attr(data-subcategory-code)');
          $data['names'] = $html->find('a.header__category-link::text');

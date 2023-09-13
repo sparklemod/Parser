@@ -16,19 +16,19 @@ class Category
         $this->repository = new CategoryRepository();
     }
 
-    public function add(array $data): void
+    public function addCategory(array $name)
     {
-        for ($i = 0; $i < count($data['names']); $i++) {
-            $category = $this->repository->findOneBy(['name' => $data['names'][$i], 'link' => $data['links'][$i]]);
-
-            if (!$category) {
+        echo $this->repository->findBy($name);
+            if (!$this->repository->findBy($name)) {
                 $category = new CategoryEntity();
-                $category->setName($data['names'][$i])->setLink($data['links'][$i]);
-                Doctrine::getEntityManager()->persist($category);
+                $category->setName($name);
+                Doctrine::getEntityManager()->persist($name);
                 Doctrine::getEntityManager()->flush();
-            }
+
         }
     }
+
+
 
     /*public function registration(array $data): int
     {
