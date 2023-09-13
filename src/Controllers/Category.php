@@ -3,19 +3,21 @@
 namespace App\Controllers;
 
 use DiDom\Document;
+use DiDom\Element;
 use phpDocumentor\Reflection\Types\Array_;
 
 class Category extends BaseController
 {
-    private \App\Models\Category $model;
-
+    private \App\Models\Category $category;
+    protected array $filePaths;
+    private \App\Models\Card $card;
 
     private const SITE = 'https://expresspanda.ru/';
 
     public function __construct()
     {
         parent::__construct();
-        $this->model = new \App\Models\Category();
+        $this->category = new \App\Models\Category();
     }
 
     public function actions()
@@ -25,20 +27,65 @@ class Category extends BaseController
 
     public function getCategories()
     {
-        if (!file_get_contents(__DIR__ . '/../Pages/sety.html')) {
+        if (!file_get_contents(__DIR__ . '/../Pages/main.html')) {
             $html = $this->getFileFromCurl(self::SITE, 'main');
         }
 
-        $html = new Document(__DIR__ . '/../Pages/sety.html', true);
-        $data['links'] = $html->find('a.header__category-link::attr(href)');
-        $data['categoriesCodes'] = $html->find('a.header__category-link::attr(data-subcategory-code)');
-        $data['names'] = $html->find('a.header__category-link::text');
-        $this->model->add($data);
+        $html = new Document(__DIR__ . '/../Pages/main.html', true);
+        $categories = $html->find('section.catalog__section');
+
+        foreach ($categories as $item) {
+            
+            $card['link'] = $item->first('a::attr(href)');
+            $card['name'] = $item->first('a.card__title::text');
+            $card['cost'] = $item->first('div.card-footer__price span::text');
+            $card['description'] = $item->first('p.card__desc::text');
+            $card['weight'] = (
+                preg_replace('/[^0-9]/', '', $item->first('p.card__hint-title::text'))) ?:
+                preg_replace('/[^0-9]/', '', $item->first('p.card__hint-title span::text')
+                );
+            $card['proteins'] = $item->first('table.card__hint-table tr td b::text');
+            $card['fats'] = $item->first('table.card__hint-table tr td:nth-child(2) b::text');
+            $card['carbohydrates'] = $item->first('table.card__hint-table tr:nth-child(2) td b::text');
+            $card['calories'] = $item->first('table.card__hint-table tr:nth-child(2) td:nth-child(2) b::text');
+
+            echo '<pre>';
+            var_dump($card);
+            echo '</pre>';
+
+
+        }
+        echo '<pre>';
+        var_dump($card);
+        echo '</pre>';
+        /* $data['links'] = $html->find('a.header__category-link::attr(href)');
+         $data['categoriesCodes'] = $html->find('a.header__category-link::attr(data-subcategory-code)');
+         $data['names'] = $html->find('a.header__category-link::text');
+         $this->category->add($data);
+
+         $this->getCards($data['categoriesCodes']);*/
         //header("Location: /?c=Category&m=list");
 
         /*echo '<pre>';
         var_dump($data);
         echo '</pre>';*/
+    }
+
+    public function getCards(array $categoriesData)
+    {
+
+        for ($i = 0; $i < count($categoriesData); $i++) {
+            $html = $html = new Document(__DIR__ . '/../Pages/main.html', true);
+            $cardsData['name'] = $html->find('a.card__title::text');
+            $cardsData['cost'] = $html->find('span.card-footer__price');
+            echo '<pre>';
+            var_dump($cardsData);
+            echo '</pre>';
+
+
+        }
+
+
     }
 
     private function getCategoriesHtml(array $data): array

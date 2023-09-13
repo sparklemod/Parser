@@ -10,20 +10,24 @@ use DateTime;
 
 class Card
 {
-    public function create(int $userID, array $data)
+    public function add(array $data, string $categoryName)
     {
-        $user = (new CategoryRepository())->find($userID);
-        $book = new BookEntity();
-        $year = new DateTime($data['year']);
-        $book->setName($data['name'])
-            ->setAuthor($data['author'])
-            ->setEdition($data['edition'])
-            ->setYear($year)
-            ->addUser($user);
-        $user->addBook($book);
-        Doctrine::getEntityManager()->persist($book);
+        $category = (new CategoryRepository())->find($categoryName);
+        $card = new BookEntity();
+        $card->setName($data['name'])
+            ->setCost($data['cost'])
+            ->setDescription($data['description'])
+            ->setWeight($data['weight'])
+            ->setProteins($data['proteins'])
+            ->setFats($data['fats'])
+            ->setCarbohydrates($data['carbohydrates'])
+            ->addCategory($category);
+        $category->addCard($card);
+        Doctrine::getEntityManager()->persist($card);
         Doctrine::getEntityManager()->flush();
     }
+
+    /*
 
     public function edit(int $bookID, array $data)
     {
@@ -53,6 +57,6 @@ class Card
         } else {
             return [];
         }
-    }
+    }*/
 
 }

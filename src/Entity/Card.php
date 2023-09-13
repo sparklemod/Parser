@@ -252,6 +252,17 @@ class Card extends BaseEntity
         return $this;
     }
 
+    /**
+     * @param Category $category
+     * @return $this
+     */
+    public function addCategory(Category $category): Card
+    {
+
+        $this->categories->add($category);
+        return $this;
+    }
+
     protected function getArray(): array
     {
         return get_object_vars($this);

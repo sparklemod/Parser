@@ -10,7 +10,7 @@ class BaseController
 {
     private Blade $template;
     protected EntityManager $em;
-    protected array $filePaths;
+
 
     public function __construct()
     {
