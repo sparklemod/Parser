@@ -29,37 +29,37 @@ class Card extends BaseEntity
     /**
      * @ORM\Column(type="string")
      */
-    private string $description;
+    private ?string $description = null;
 
     /**
-     * @ORM\Column(type="integer")
+     * @ORM\Column(type="float")
      */
-    private int $cost;
+    private ?float $cost = null;
 
     /**
-     * @ORM\Column(type="integer")
+     * @ORM\Column(type="float")
      */
-    private int $weight;
+    private ?float $weight = null;
 
     /**
-     * @ORM\Column(type="integer")
+     * @ORM\Column(type="float")
      */
-    private int $proteins;
+    private ?float $proteins = null;
 
     /**
-     * @ORM\Column(type="integer")
+     * @ORM\Column(type="float")
      */
-    private int $fats;
+    private ?float $fats = null;
 
     /**
-     * @ORM\Column(type="integer")
+     * @ORM\Column(type="float")
      */
-    private int $carbohydrates;
+    private ?float $carbohydrates = null;
 
     /**
-     * @ORM\Column(type="integer")
+     * @ORM\Column(type="float")
      */
-    private int $calories;
+    private ?float $calories = null;
 
     /**
      * @ManyToMany(targetEntity="Category", mappedBy="cards")
@@ -109,130 +109,132 @@ class Card extends BaseEntity
     }
 
     /**
-     * @return string
+     * @return string|null
      */
-    public function getDescription(): string
+    public function getDescription(): ?string
     {
         return $this->description;
     }
 
     /**
-     * @param string $description
+     * @param string|null $description
      * @return Card
      */
-    public function setDescription(string $description): Card
+    public function setDescription(?string $description): Card
     {
         $this->description = $description;
         return $this;
     }
 
     /**
-     * @return int
+     * @return float|null
      */
-    public function getCost(): int
+    public function getCost(): ?float
     {
         return $this->cost;
     }
 
     /**
-     * @param int $cost
+     * @param float|null $cost
      * @return Card
      */
-    public function setCost(int $cost): Card
+    public function setCost(?float $cost): Card
     {
         $this->cost = $cost;
         return $this;
     }
 
     /**
-     * @return int
+     * @return float|null
      */
-    public function getWeight(): int
+    public function getWeight(): ?float
     {
         return $this->weight;
     }
 
     /**
-     * @param int $weight
+     * @param float|null $weight
      * @return Card
      */
-    public function setWeight(int $weight): Card
+    public function setWeight(?float $weight): Card
     {
         $this->weight = $weight;
         return $this;
     }
 
     /**
-     * @return int
+     * @return float|null
      */
-    public function getProteins(): int
+    public function getProteins(): ?float
     {
         return $this->proteins;
     }
 
     /**
-     * @param int $proteins
+     * @param float|null $proteins
      * @return Card
      */
-    public function setProteins(int $proteins): Card
+    public function setProteins(?float $proteins): Card
     {
         $this->proteins = $proteins;
         return $this;
     }
 
     /**
-     * @return int
+     * @return float|null
      */
-    public function getFats(): int
+    public function getFats(): ?float
     {
         return $this->fats;
     }
 
     /**
-     * @param int $fats
+     * @param float|null $fats
      * @return Card
      */
-    public function setFats(int $fats): Card
+    public function setFats(?float $fats): Card
     {
         $this->fats = $fats;
         return $this;
     }
 
     /**
-     * @return int
+     * @return float|null
      */
-    public function getCarbohydrates(): int
+    public function getCarbohydrates(): ?float
     {
         return $this->carbohydrates;
     }
 
     /**
-     * @param int $carbohydrates
+     * @param float|null $carbohydrates
      * @return Card
      */
-    public function setCarbohydrates(int $carbohydrates): Card
+    public function setCarbohydrates(?float $carbohydrates): Card
     {
         $this->carbohydrates = $carbohydrates;
         return $this;
     }
 
     /**
-     * @return int
+     * @return float|null
      */
-    public function getCalories(): int
+    public function getCalories(): ?float
     {
         return $this->calories;
     }
 
     /**
-     * @param int $calories
+     * @param float|null $calories
      * @return Card
      */
-    public function setCalories(int $calories): Card
+
+    public function setCalories(?float $calories): Card
     {
         $this->calories = $calories;
         return $this;
     }
+
 
     /**
      * @return Category[]

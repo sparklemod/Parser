@@ -2,29 +2,35 @@
 
 namespace App\Models;
 
-use App\Entity\Card as BookEntity;
-use App\Repository\BookRepository;
+use App\Entity\Card as CardEntity;
+use App\Repository\CardRepository;
 use App\Repository\CategoryRepository;
 use App\Services\DataBase\Doctrine;
 use DateTime;
 
 class Card
 {
+    private CardRepository $repository;
+
     public function add(array $data, string $categoryName)
     {
-        $category = (new CategoryRepository())->find($categoryName);
-        $card = new BookEntity();
-        $card->setName($data['name'])
-            ->setCost($data['cost'])
-            ->setDescription($data['description'])
-            ->setWeight($data['weight'])
-            ->setProteins($data['proteins'])
-            ->setFats($data['fats'])
-            ->setCarbohydrates($data['carbohydrates'])
-            ->addCategory($category);
-        $category->addCard($card);
-        Doctrine::getEntityManager()->persist($card);
-        Doctrine::getEntityManager()->flush();
+        $this->repository = new CardRepository();
+        if (!$this->repository->findOneBy(['name' => $data['name']])) {
+            $category = (new CategoryRepository())->findOneBy(['name' => $categoryName]);
+            $card = new CardEntity();
+            $card->setName($data['name'])
+                ->setCost($data['cost'])
+                ->setDescription($data['description'])
+                ->setWeight($data['weight'])
+                ->setProteins($data['proteins'])
+                ->setFats($data['fats'])
+                ->setCarbohydrates($data['carbohydrates'])
+                ->setCalories($data['calories'])
+                ->addCategory($category);
+            $category->addCard($card);
+            Doctrine::getEntityManager()->persist($card);
+            Doctrine::getEntityManager()->flush();
+        }
     }
 
     /*

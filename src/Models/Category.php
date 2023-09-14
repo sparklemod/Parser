@@ -16,18 +16,16 @@ class Category
         $this->repository = new CategoryRepository();
     }
 
-    public function addCategory(array $name)
+    public function addCategory(string $name)
     {
-        echo $this->repository->findBy($name);
-            if (!$this->repository->findBy($name)) {
-                $category = new CategoryEntity();
-                $category->setName($name);
-                Doctrine::getEntityManager()->persist($name);
-                Doctrine::getEntityManager()->flush();
+        if (!$this->repository->findOneBy(['name' => $name])) {
+            $category = new CategoryEntity();
+            $category->setName($name);
+            Doctrine::getEntityManager()->persist($category);
+            Doctrine::getEntityManager()->flush();
 
         }
     }
-
 
 
     /*public function registration(array $data): int
