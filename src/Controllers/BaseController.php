@@ -3,14 +3,16 @@
 namespace App\Controllers;
 
 use App\Services\DataBase\Doctrine;
+use DiDom\Document;
 use Doctrine\ORM\EntityManager;
+use Doctrine\ORM\EntityRepository;
 use Jenssegers\Blade\Blade;
+use phpDocumentor\Reflection\Types\Collection;
 
 class BaseController
 {
     private Blade $template;
-    protected EntityManager $em;
-
+    private EntityManager $em;
 
     public function __construct()
     {
@@ -18,7 +20,8 @@ class BaseController
         $this->em = Doctrine::getEntityManager();
     }
 
-    protected function getRepository(string $class){
+    protected function getRepository(string $class): EntityRepository
+    {
         return $this->em->getRepository($class);
     }
 

@@ -20,4 +20,4 @@
 </body>
 </html>
 
-<?php /**PATH C:\OSPanel\domains\Parser\src\Views/Category/actionsMenu.blade.php ENDPATH**/ ?>
+<?php /**PATH C:\OSPanel\domains\Parser\src\Views/Parser/actionsMenu.blade.php ENDPATH**/ ?>
