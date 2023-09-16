@@ -33,7 +33,7 @@ class BaseController
 
     protected function getFileFromCurl(string $url, string $filename): string
     {
-        $filePath = __DIR__ . '/../Pages/' . $filename . '.html';
+        $filePath = __DIR__ . '/../Files/' . $filename . '.html';
         file_put_contents($filePath, $this->getCurl($url));
         return $filePath;
     }

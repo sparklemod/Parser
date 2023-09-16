@@ -10,10 +10,11 @@
 
 <body>
 <div class="list-group" style ="display: inline-block">
-    <a href="http://parser/?c=Parser&m=getCategoriesAndCards" class="list-group-item list-group-item-action">Записать категории и карточки в БД</a>
+    <a href="http://parser/?c=Parser&m=getCategoriesAndCards" class="list-group-item list-group-item-action">Получить категории</a>
     <a href="http://parser/?c=Parser&m=getJSON" class="list-group-item list-group-item-action">Создать JSON-файл</a>
 </div>
 
 </body>
 </html>
 
+<?php /**PATH C:\OSPanel\domains\Parser\src\Views/Menu/actionsMenu.blade.php ENDPATH**/ ?>
