@@ -3,11 +3,9 @@
 namespace App\Controllers;
 
 use App\Services\DataBase\Doctrine;
-use DiDom\Document;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityRepository;
 use Jenssegers\Blade\Blade;
-use phpDocumentor\Reflection\Types\Collection;
 
 class BaseController
 {
@@ -28,7 +26,6 @@ class BaseController
     public function render(string $template, array $data)
     {
         echo $this->template->render($template, $data);
-
     }
 
     protected function getFileFromCurl(string $url, string $filename): string

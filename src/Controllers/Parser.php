@@ -2,6 +2,7 @@
 
 namespace App\Controllers;
 
+use App\Services\DataBase\Doctrine;
 use DiDom\Document;
 use DiDom\Element;
 
@@ -29,6 +30,7 @@ class Parser extends BaseController
 
         $html = new Document(__DIR__ . '/../Files/main.html', true);
         $sections = $html->find('section.catalog__section');
+        $cards = array();
 
         foreach ($sections as $section) {
             $categoryName = $section->first('p.catalog__section-title a::text');
@@ -37,12 +39,15 @@ class Parser extends BaseController
 
             foreach ($cardSections as $cardSection) {
                 $card = $this->getCard($cardSection, $categoryName);
-                $categories[] = array(
-                    'name' => $categoryName,
-                    'card' => $card
-                );
+                array_push($cards, $card[0]);
             }
+
+            $categories[] = array(
+                'name' => $categoryName,
+                'cards' => $cards
+            );
         }
+        Doctrine::getEntityManager()->flush();
         return $categories;
     }
 
@@ -64,13 +69,14 @@ class Parser extends BaseController
         $cost = floatval($cardSection->first('div.card-footer__price span::text'));
         $description = $cardSection->first('p.card__desc::text') ?: "";
         $weight = floatval((
-        preg_replace('/[^0-9]/', '', $cardSection->first('p.card__hint-title::text'))) ?:
+            preg_replace('/[^0-9]/', '', $cardSection->first('p.card__hint-title::text'))) ?:
             preg_replace('/[^0-9]/', '', $cardSection->first('p.card__hint-title span::text')
             ));
         $proteins = floatval($cardSection->first('table.card__hint-table tr td b::text'));
         $fats = floatval($cardSection->first('table.card__hint-table tr td:nth-child(2) b::text'));
         $carbohydrates = floatval($cardSection->first('table.card__hint-table tr:nth-child(2) td b::text'));
         $calories = floatval($cardSection->first('table.card__hint-table tr:nth-child(2) td:nth-child(2) b::text'));
+
         $card[] = array(
             'name' => $name,
             'cost' => $cost,
@@ -81,7 +87,7 @@ class Parser extends BaseController
             'carbohydrates' => $carbohydrates,
             'calories' => $calories
         );
-        $this->model->addCard(current($card), $category);
+
         return $card;
     }
 

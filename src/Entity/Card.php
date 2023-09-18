@@ -235,7 +235,6 @@ class Card extends BaseEntity
         return $this;
     }
 
-
     /**
      * @return Category[]
      */
@@ -248,7 +247,7 @@ class Card extends BaseEntity
      * @param Category[] $categories
      * @return Card
      */
-    public function setCategories(Collection $categories): Card
+    public function setCategories(array $categories): Card
     {
         $this->categories = new ArrayCollection($categories);
         return $this;
@@ -260,7 +259,6 @@ class Card extends BaseEntity
      */
     public function addCategory(Category $category): Card
     {
-
         $this->categories->add($category);
         return $this;
     }
@@ -268,7 +266,6 @@ class Card extends BaseEntity
     protected function getArray(): array
     {
         return get_object_vars($this);
-
     }
 
 }

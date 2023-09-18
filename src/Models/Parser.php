@@ -46,7 +46,7 @@ class Parser
                 ->addCategory($category);
             $category->addCard($card);
             Doctrine::getEntityManager()->persist($card);
-            Doctrine::getEntityManager()->flush();
+            //Doctrine::getEntityManager()->flush();
         }
     }
 }

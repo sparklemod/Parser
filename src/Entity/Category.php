@@ -29,8 +29,6 @@ class Category
      */
     private string $name;
 
-
-
     /**
      * @ManyToMany(targetEntity="Card")
      * @JoinTable(name="Categories_Cards",
@@ -94,7 +92,7 @@ class Category
      * @param Card[] $cards
      * @return Category
      */
-    public function setCards(Collection $cards): Category
+    public function setCards(array $cards): Category
     {
         $this->cards = new ArrayCollection($cards);
         return $this;
@@ -106,12 +104,9 @@ class Category
      */
     public function addCard(Card $card): Category
     {
-
         $this->cards->add($card);
         return $this;
     }
-
-
 
     public function toArray(): array
     {
@@ -122,6 +117,5 @@ class Category
     protected function getArray(): array
     {
         return get_object_vars($this);
-
     }
 }

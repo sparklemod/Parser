@@ -15,7 +15,6 @@ use Doctrine\ORM\EntityRepository;
  */
 class CardRepository extends BaseRepository
 {
-
     protected function getEntity(): string
     {
         return Card::class;
