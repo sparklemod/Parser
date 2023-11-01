@@ -25,7 +25,7 @@ class Parser extends BaseController
     public function getCategoriesAndCards(): array
     {
         if (!file_get_contents(__DIR__ . '/../Files/main.html')) {
-            $html = $this->getFileFromCurl(self::SITE, 'main');
+            $this->getFileFromCurl(self::SITE, 'main');
         }
 
         $html = new Document(__DIR__ . '/../Files/main.html', true);
